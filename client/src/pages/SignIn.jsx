@@ -2,13 +2,15 @@ import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
+import { // action creators
   signInStart,
   signInSuccess,
   signInFailure,
 } from '../redux/user/userSlice';
+import OAuth from '../components/OAuth';
 
 export default function SignIn() {
+  const { theme } = useSelector((state) => state.theme);
   const [formData, setFormData] = useState({});
   const { loading, error: errorMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ export default function SignIn() {
       }
 
       if (res.ok) {
+        // if user sign-in successfully then set the "user" info in Redux-Store
         dispatch(signInSuccess(data));
         navigate('/');
       }
@@ -46,7 +49,7 @@ export default function SignIn() {
       <div className='flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5'>
         {/* left */}
         <div className='flex-1'>
-          <Link to='/' className='font-bold dark:text-white text-4xl'>
+          <Link to='/' className={`font-bold ${theme === 'light' ? 'text-amber-950' : 'text-white'} text-4xl`}>
             <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
             Charchit{'\''}s
             </span>
@@ -93,6 +96,7 @@ export default function SignIn() {
                 'Sign In'
               )}
             </Button>
+            <OAuth/>
           </form>
           <div className='flex gap-2 text-sm mt-5'>
             <span>Dont Have an account?</span>

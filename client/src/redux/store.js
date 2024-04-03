@@ -2,9 +2,11 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import userReducer from './user/userSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import themeReducer from './theme/themeSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
+  theme: themeReducer,
 });
 
 const persistConfig = {
@@ -21,6 +23,6 @@ export const store = configureStore({
       getDefaultMiddleware({ serializableCheck: false }),
 });
 
-console.log("store :", store);
+// console.log("store :", store);
 export const persistor = persistStore(store);
-console.log("persistor :", persistor);
+// console.log("persistor :", persistor);
